@@ -23,7 +23,7 @@
                     <template #title>
                         <b class = 'text-black' style = 'font-size: 30px'> YCBS 營隊倒數 </b>
                     </template>
-                    <v-card title = '2026 營隊結束啦🥳' class = glass v-ripple />
+                    <v-card title = '2026 營隊結束啦🥳' class = glass />
                     <!-- <v-row>
                         <v-col cols = 6 md = 3><v-card class = text-center variant = tonal color = black :title = countdown.days text = 天 /></v-col>
                         <v-col cols = 6 md = 3><v-card class = text-center variant = tonal color = black :title = countdown.hours text = 時 /></v-col>
@@ -54,12 +54,8 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
-
 export default {   
-    name: 'legs',
+    name: 'CountdownAnimation',
     data() {
         return {
             links: [
@@ -67,6 +63,7 @@ export default {
                 {name: '歷年活動', icon: 'timeline', href: 'old'},
                 {name: '現在報名', icon: 'bolt', href: 'register'}
             ],
+            timer: null,
             countdown: {
                 all: 0,
                 seconds: 0,
@@ -77,10 +74,6 @@ export default {
         }
     },
     mounted() {
-        M.AutoInit();
-        var n = window.innerHeight;
-        var m = window.innerWidth;
-        var now = window.scrollY;
         // animate('#register_now', {
         //     scale: [
         //         {to: 1.1, duration: 1000},
@@ -89,9 +82,12 @@ export default {
         //     loop: true,
         //     loopDelay: 300
         // })
-        setInterval(() => {
+        this.timer = window.setInterval(() => {
             this.update_timer();
         }, 100);
+    },
+    beforeUnmount() {
+        window.clearInterval(this.timer)
     },
     methods: {
         update_timer() {

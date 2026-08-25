@@ -1,20 +1,45 @@
 // Centralized Vuetify with warm theme and icon set
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
-import { fa } from "vuetify/iconsets/fa";
-// import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import { fa } from 'vuetify/iconsets/fa'
+import {
+  VApp,
+  VCard,
+  VCol,
+  VContainer,
+  VDivider,
+  VHover,
+  VIcon,
+  VImg,
+  VMain,
+  VProgressLinear,
+  VRow,
+} from 'vuetify/components'
+import { Ripple } from 'vuetify/directives'
 
-// Load global theme CSS once per entry
+// Load shared design tokens before compatibility and base styles.
+import '../styles/tokens.css'
 import '../styles/theme.css'
 
 // import "@mdi/font/css/materialdesignicons.css";
-import "@fortawesome/fontawesome-free/css/all.css";
+import '@fortawesome/fontawesome-free/css/fontawesome.css'
+import '@fortawesome/fontawesome-free/css/solid.css'
 
 const vuetify = createVuetify({
-  components,
-  directives,
+  components: {
+    VApp,
+    VCard,
+    VCol,
+    VContainer,
+    VDivider,
+    VHover,
+    VIcon,
+    VImg,
+    VMain,
+    VProgressLinear,
+    VRow,
+  },
+  directives: { Ripple },
   defaults: {
     global: { ripple: true },
     VCard: { rounded: 'lg', class: 'spacious' },

@@ -1,6 +1,6 @@
 <template>
     <v-card class = 'bs' id = background align = center justify = middle min-height="100vh">
-        <v-img src = 'Logo/logo.png' id = logo max-height = 100vh max-width = '100vw' />
+        <v-img src = 'Logo/logo.png' id = logo alt = '' aria-hidden = 'true' max-height = 100vh max-width = '100vw' />
     </v-card>
     <div class = bs>
         <v-card id = zero color = transparent class = 'align-content-center text-center' variant = text>
@@ -13,12 +13,10 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
+import { animate, onScroll } from 'animejs'
 
 export default {   
-    name: 'legs',
+    name: 'LegacyLogoAnimation',
     data() {
         return {
             links: [
@@ -38,10 +36,16 @@ export default {
         }
     },
     mounted() {
-        M.AutoInit();
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const prompt = document.querySelector('#slide-to-show')
+            if (prompt) {
+                prompt.style.opacity = 1
+                prompt.style.transform = 'none'
+            }
+            return
+        }
+
         var n = window.innerHeight;
-        var m = window.innerWidth;
-        var now = window.scrollY;
         animate('#background', {
             autoplay: onScroll({
                 enter: `center bottom-=${n * 0.25}`,
@@ -49,9 +53,8 @@ export default {
                 sync: true,
                 // debug: true
                 onUpdate: (e) => {
-                    $('#background').css({
-                        background: `linear-gradient(${((700 - 20) * e.progress) + 20}deg, #00FFFF, purple)`,
-                    })
+                    const background = document.querySelector('#background')
+                    if (background) background.style.background = `linear-gradient(${((700 - 20) * e.progress) + 20}deg, #00FFFF, purple)`
                 }
             })
         })

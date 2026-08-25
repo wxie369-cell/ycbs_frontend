@@ -18,10 +18,6 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
-
 import logo from '@/index/animates/logo.vue';
 import countdown from '@/index/animates/countdown.vue';
 import showcase from '@/index/animates/showcase.vue';
@@ -34,11 +30,6 @@ export default {
         countdown,
         showcase,
         core
-    },
-    mounted() {
-        M.AutoInit();
-    },
-    methods: {
     }
 }
 </script>
@@ -56,5 +47,12 @@ export default {
     position: relative;
     height: 400vh;
     width: 100vw;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .place_holder,
+    .place_holder_two {
+        height: 100vh;
+    }
 }
 </style>

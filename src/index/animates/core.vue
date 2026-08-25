@@ -27,21 +27,11 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
-
 export default {   
-    name: 'legs',
+    name: 'CoreAnimation',
     data() {
         return {
         }
-    },
-    mounted() {
-        M.AutoInit();
-        var n = window.innerHeight;
-        var m = window.innerWidth;
-        var now = window.scrollY;
     },
     methods: {
     }

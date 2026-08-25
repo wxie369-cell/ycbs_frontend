@@ -1,139 +1,209 @@
-/* Global warm theme and typography */
-:root {
-  /* Brand palette (Nunito + Inter) */
-  /* Single, consistent cream background */
-  --color-bg: #FAF7EF;             /* warm off-white */
-  --color-bg-2: #FAF7EF;           /* keep for compatibility, same as bg */
-  --color-surface: #FFFFFF;        /* clean card */
-  --color-primary: #AA00AA;        /* deep green */
-  --color-primary-600: #AA00FF;    /* hover green */
-  --color-secondary: #AA0077;      /* light green accent */
-  --color-accent: #AA55AA;         /* pale green */
-  --color-text: #5500AA;           /* ink green */
-  --color-muted: #6A7C76;          /* muted neutral */
-
-  --radius: 14px;
-  --radius-sm: 10px;
-  --nav-blur: 16px;
-  --shadow-sm: 0 6px 16px rgba(0,0,0,.08);
-  --shadow-md: 0 10px 24px rgba(0,0,0,.12);
+html {
+  scroll-behavior: smooth;
 }
-/* 
-.v-icon {
-  display: inline-block;
-  font: normal normal normal 24px/1 "Material Design Icons";
-  font-size: inherit;
-  text-rendering: auto;
-  line-height: inherit;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
-    font-family: 'font', sans-serif;
-    /* background-image: linear-gradient(to bottom, #49a06f, wheat); */
-    /* background: linear-gradient(#B0DC91, #FBF7EF); */
-}
-/* @font-face {
-    font-family: 'font';
-    src: url('../../public/fonts/CreHappiness-B.ttf');
-} */
-
-body {
-  font-family: 'Inter', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
-  color: var(--color-text);
-  font-size: 20px;
-  /* background: var(--color-bg); solid cream for consistency */
+  margin: 0;
+  overflow-x: clip;
+  background: var(--ycbs-color-canvas);
+  color: var(--ycbs-color-text);
+  font-family: var(--ycbs-font-sans);
+  font-size: var(--ycbs-text-base);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* Smooth anchor navigation and header offset */
-html { scroll-behavior: smooth; }
-/* Keep section anchors visible below the sticky app bar */
-[id] { scroll-margin-top: 96px; }
-
-/* Headings in Nunito for a friendly, warm vibe */
-h1, h2, h3, h4, h5, h6, .v-card-title, .v-btn, .v-toolbar-title {
-  font-family: 'font', 'Nunito', 'Inter', sans-serif;
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
-/* Links */
-a { color: var(--color-primary); text-decoration: none; }
-a:hover { color: var(--color-primary-600); }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.v-card-title,
+.v-btn,
+.v-toolbar-title {
+  font-family: var(--ycbs-font-display);
+}
 
-/* Glassy surfaces */
+a {
+  color: var(--ycbs-color-brand-700);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--ycbs-color-brand-600);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ycbs-color-on-dark);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--ycbs-color-brand-700);
+}
+
+[id] {
+  scroll-margin-top: calc(var(--ycbs-header-main-height) + 20px);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Compatibility utilities still used by internal pages. */
 .glass {
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(var(--nav-blur));
-  -webkit-backdrop-filter: blur(var(--nav-blur));
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
+  -webkit-backdrop-filter: blur(var(--nav-blur));
+  backdrop-filter: blur(var(--nav-blur));
 }
 
 .glass-card {
-  background: rgba(255,255,255,0.86);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.elevate {
+  transition: box-shadow var(--ycbs-duration-base) var(--ycbs-ease-standard);
+}
+
+.elevate:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.v-card {
+  border-radius: var(--radius);
+}
+
+/* Legacy scroll scenes use Vuetify cards as full-viewport canvases. */
+.v-card.bs {
+  border-radius: 0 !important;
+}
+
+.v-card--variant-elevated {
   box-shadow: var(--shadow-sm);
 }
 
-/* Elevation helpers */
-.elevate:hover { box-shadow: var(--shadow-md); }
+.v-btn {
+  font-weight: 700;
+}
 
-/* Materialize spinner – align with primary */
-/* .spinner-layer,
-.spinner-blue,
-.spinner-red,
-.spinner-yellow,
-.spinner-green { border-color: var(--color-primary) !important; } */
+.v-application {
+  background: transparent !important;
+}
 
-/* Vuetify adjustments */
-.v-card { border-radius: var(--radius);}
-.v-card--variant-elevated { box-shadow: var(--shadow-sm); }
-.v-btn { border-radius: 999px; font-weight: 700; }
-.v-application { background: transparent !important; }
-.v-card-title { font-weight: bold; }
+.v-card-title {
+  font-weight: 700;
+}
 
-/* Utility */
-.text-muted { color: var(--color-muted) !important; }
-.text-primary { color: var(--color-primary) !important; }
-.text-accent { color: var(--color-secondary) !important; }
-.text-secondary { color: var(--color-secondary) !important; }
-.bg-surface { background-color: var(--color-surface) !important; }
+.text-muted {
+  color: var(--ycbs-color-muted) !important;
+}
 
-/* Title stroke for readability on imagery */
+.text-primary {
+  color: var(--ycbs-color-brand-700) !important;
+}
+
+.text-accent,
+.text-secondary {
+  color: var(--ycbs-color-accent-600) !important;
+}
+
+.bg-surface {
+  background-color: var(--ycbs-color-surface) !important;
+}
+
 .stroke {
-  text-shadow: -1px -1px 0 #fff,
-               1px -1px 0 #fff,
-              -1px  1px 0 #fff,
-               1px  1px 0 #fff;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
 
-html {
-    overflow: -moz-hidden-unscrollable;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--ycbs-duration-slow) var(--ycbs-ease-standard);
 }
 
-body::-webkit-scrollbar {
-    display: none;
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
-/* Smooth page transitions */
-.fade-enter-active, .fade-leave-active { transition: opacity .6s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
+.soft-divider {
+  width: 100%;
+  height: 1px;
+  margin: var(--ycbs-space-4) 0;
+  border: 0;
+  background: var(--ycbs-color-border);
+}
 
-/* Soft divider */
-.soft-divider { height: 1px; width: 100%; background: rgba(0,0,0,0.08); border: none; margin: 16px 0; border-radius: 1px; }
+.section {
+  padding-top: var(--ycbs-space-12);
+  padding-bottom: var(--ycbs-space-12);
+}
 
-/* Spacing helpers */
-.section { padding-top: 48px; padding-bottom: 48px; }
-.spacious { padding: 24px; }
-.spacious-lg { padding: 32px; }
+.spacious {
+  padding: var(--ycbs-space-6);
+}
 
-/* Reveal-on-scroll animation */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.show { opacity: 1; transform: none; }
+.spacious-lg {
+  padding: var(--ycbs-space-8);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--ycbs-duration-slow) var(--ycbs-ease-standard),
+    transform var(--ycbs-duration-slow) var(--ycbs-ease-standard);
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

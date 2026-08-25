@@ -6,7 +6,12 @@
                     <v-col cols = 12 md = 4>
                         <v-hover>
                             <template #default = '{isHovering, props}'>
-                                <a :href = '`${i.href}`'>
+                                <a
+                                    :href = '`${i.href}`'
+                                    :target = 'i.external ? `_blank` : undefined'
+                                    :rel = 'i.external ? `noopener noreferrer` : undefined'
+                                    :aria-label = 'i.external ? `${i.name}（另開新視窗）` : undefined'
+                                >
                                     <v-card
                                         class = 'ma-3 text-center align-content-center'
                                         v-bind = props
@@ -33,26 +38,29 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
+import { animate, onScroll } from 'animejs'
 
 export default {   
-    name: 'legs',
+    name: 'ShowcaseAnimation',
     data() {
         return {
             links: [
-                {name: '成員介紹', icon: 'people-group', href: 'about'},
+                {name: '成員介紹', icon: 'people-group', href: 'about.html'},
                 // {name: '歷年活動', icon: 'timeline', href: 'old'},
-                {name: '立即報名', icon: 'bolt', href: 'https://forms.gle/4gZzUWVFvyVikF9k9'}
+                {name: '查看報名資訊', icon: 'bolt', href: 'https://forms.gle/4gZzUWVFvyVikF9k9', external: true}
             ]
         }
     },
     mounted() {
-        M.AutoInit();
-        var n = window.innerHeight;
-        var m = window.innerWidth;
-        var now = window.scrollY;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const showcase = document.querySelector('#showcase')
+            if (showcase) {
+                showcase.style.opacity = 1
+                showcase.style.transform = 'none'
+            }
+            return
+        }
+
         // animate('#showcase', {
         //     x: '10rem',
         //     opacity: 0,

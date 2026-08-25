@@ -32,7 +32,7 @@
                                         </v-col>
                                     </v-row>
                                     <div class = 'ma-3'>
-                                        <v-progress-linear color = amber value = 100 height = 22 v-model = now rounded = lg></v-progress-linear>
+                                        <v-progress-linear color = amber value = 100 height = 22 v-model = now rounded = lg aria-label = '營隊活動進度'></v-progress-linear>
                                         <div class = 'd-flex justify-space-between'>
                                             <span><b class = 'text-amber'> 營隊{{ now > 0 ? '' : '將' }}開始於 2026 1/28 </b></span>
                                             <span><b> 營隊{{ now < 1 ? '將' : '' }}於 2026 1/30 結束</b></span>
@@ -49,12 +49,8 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
-
 export default {   
-    name: 'legs',
+    name: 'EventDetailsAnimation',
     data() {
         return {
             data: [
@@ -69,10 +65,6 @@ export default {
         }
     },
     mounted() {
-        M.AutoInit();
-        var n = window.innerHeight;
-        var m = window.innerWidth;
-        var now = window.scrollY;
         this.now = (Date.now() / 1000 - this.start) / (this.end - this.start);
         this.now = (this.now < 0 ? 0 : (this.now > 1 ? 1 : this.now)) * 100;
         // alert(this.now);

@@ -1,7 +1,7 @@
 <template>
     <v-card class = 'bs' id = background align = center justify = middle min-height="100vh">
         <template #image>
-            <v-img src = 'Logo/logo.png' id = logo max-height = 100vh max-width = '100vw' />
+            <v-img src = 'Logo/logo.png' id = logo alt = '' aria-hidden = 'true' max-height = 100vh max-width = '100vw' />
         </template>
     </v-card>
     <div class = bs>
@@ -15,21 +15,25 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
+import { animate, onScroll } from 'animejs'
 
 export default {   
-    name: 'legs',
+    name: 'EventLogoAnimation',
     data() {
         return {
         }
     },
     mounted() {
-        M.AutoInit();
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const prompt = document.querySelector('#slide-to-show')
+            if (prompt) {
+                prompt.style.opacity = 1
+                prompt.style.transform = 'none'
+            }
+            return
+        }
+
         var n = window.innerHeight;
-        var m = window.innerWidth;
-        var now = window.scrollY;
         animate('#background', {
             autoplay: onScroll({
                 enter: `center center`,
@@ -37,12 +41,10 @@ export default {
                 sync: true,
                 // debug: true
                 onUpdate: (e) => {
-                    $('#background').css({
-                        background: `linear-gradient(${(((3420 - 20) * e.progress) % 360) + 20}deg, purple, pink)`,
-                    })
-                    $('#logo').css({
-                        filter: `blur(${Math.floor(500 * e.progress)}px)`
-                    })
+                    const background = document.querySelector('#background')
+                    const logo = document.querySelector('#logo')
+                    if (background) background.style.background = `linear-gradient(${(((3420 - 20) * e.progress) % 360) + 20}deg, purple, pink)`
+                    if (logo) logo.style.filter = `blur(${Math.floor(500 * e.progress)}px)`
                 }
             })
         })

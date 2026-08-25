@@ -1,35 +1,42 @@
 <template>
     <v-card class = 'bs' id = background align = center justify = middle min-height="100vh">
         <template #image>
-            <v-img src = 'Logo/logo.png' id = logo max-height = 100vh max-width = '100vw' />
+            <v-img src = 'Logo/logo.png' id = logo alt = '' aria-hidden = 'true' max-height = 100vh max-width = '100vw' />
         </template>
     </v-card>
     <div>
-        <div class = 'align-content-center text-center show ani'><v-card variant = text title = 歡迎，YCBS成員 class = 'black-text' /></div>
-        <div class = 'align-content-center text-center show ani'><v-card variant = text title = 這裡是我們的官網 class = 'black-text' /></div>
-        <div class = 'align-content-center text-center show ani'><v-card variant = text title = 相信你各位都已經看過網站了對吧 class = 'black-text' /></div>
+        <div class = 'align-content-center text-center show ani'><v-card variant = text title = 歡迎，YCBS成員 class = 'text-black' /></div>
+        <div class = 'align-content-center text-center show ani'><v-card variant = text title = 這裡是我們的官網 class = 'text-black' /></div>
+        <div class = 'align-content-center text-center show ani'><v-card variant = text title = 相信你各位都已經看過網站了對吧 class = 'text-black' /></div>
         <div class = 'final ani'>
             <v-container>
                 <v-card
                     title = 回饋表
                     subtitle = 有甚麼想說的嗎
                     class = 'glass ma-3'
-
-                    v-ripple
                 />
                 <v-card class = 'glass ma-3' title = 修改紀錄 subtitle = changelog>
                     <template #text>
-                        <div class = 'd-flex justify-space-between'>
-                            <span><h4>目前進度</h4></span>
-                            <span><h4 class = right> {{ data.length }} % </h4></span>
+                        <h2 class = 'sr-only'>修改紀錄</h2>
+                        <div
+                            class = 'd-flex justify-space-between'
+                            :aria-label = '`網站目前進度 ${data.length}%`'
+                        >
+                            <strong>目前進度</strong>
+                            <strong class = right aria-hidden = true> {{ data.length }} % </strong>
                         </div>
-                        <v-progress-linear model-value = 12 class = 'ma-3' />
+                        <v-progress-linear :model-value = 'data.length' class = 'ma-3' aria-label = '網站目前進度' />
                         <v-divider class = ma-5 />
                         <v-row>
                             <v-col cols = 12 md = 4 v-for = 'i in data' :key = i>
                                 <v-hover>
                                     <template #default = '{isHovering, props}'>
-                                        <a :href = 'i.url' target = '_blank'>
+                                        <a
+                                            :href = 'i.url'
+                                            target = '_blank'
+                                            rel = 'noopener noreferrer'
+                                            :aria-label = '`在新視窗查看提交紀錄：${i.title}`'
+                                        >
                                             <v-card v-bind = props :color = 'isHovering ? `primary` : undefined' :subtitle = '`${i.date} - ${i.name}`' :title = i.title :prepend-avatar = i.avatar>
                                                 <template #text>
                                                     <b v-html = i.message />
@@ -52,47 +59,63 @@
 </template>
 
 <script>
- /* eslint-disable */ 
-import $ from 'jquery'
-import { animate, stagger, onScroll, text } from 'animejs';
+import { animate, stagger } from 'animejs'
 
 export default {   
-    name: 'legs',
+    name: 'ProgressWallpaper',
     data() {
         return {
-            data: []
+            data: [],
+            commitRequest: null,
         }
     },
-    mounted() {
-        M.AutoInit();
-        var n = window.innerHeight;
-        var m = window.innerWidth;
-        var now = window.scrollY;
+    async mounted() {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        if (reduceMotion) {
+            document.querySelectorAll('.show').forEach(panel => { panel.hidden = true })
+            const finalPanel = document.querySelector('.final')
+            if (finalPanel) finalPanel.style.opacity = 1
+        } else {
+            animate('.ani', {
+                opacity: [
+                    {to: 10, duration: 500},
+                    {to: 0, duration: 1000},
+                ],
+                delay: stagger(2000),
+                onComplete: () => {
+                    const finalPanel = document.querySelector('.final')
+                    if (finalPanel) finalPanel.style.opacity = 1
+                },
+            })
+        }
 
-        animate('.ani', {
-            opacity: [
-                {to: 10, duration: 500},
-                {to: 0, duration: 1000},
-            ],
-            delay: stagger(2000),
-            onComplete: () => $('.final').css({opacity: 1})
-        })
-        $.get('https://api.github.com/repos/mysh212/ycbs_frontend/commits', (response) => {
-            var get_commit = (x) => {
-                var now = x.commit.author;
-                now['title'] = x.commit.message.substr(0, x.commit.message.indexOf('\n'));
-                now['message'] = x.commit.message.substr(x.commit.message.indexOf('\n') + 1);
-                now['avatar'] = x.author.avatar_url;
-                now['url'] = x.html_url;
-
-                now.date = now.date.replace('T', ' ').replace('Z', ' ');
-                while(now.message.indexOf('\n') != -1) now.message = now.message.replace('\n', '<br>');
-                return now;
-            };
-            this.data = response.map(get_commit);
-        })
+        this.commitRequest = new AbortController()
+        try {
+            const response = await fetch('https://api.github.com/repos/wxie369-cell/ycbs_frontend/commits', {
+                signal: this.commitRequest.signal,
+            })
+            if (!response.ok) return
+            const commits = await response.json()
+            this.data = commits.map(this.normalizeCommit)
+        } catch (error) {
+            if (error.name !== 'AbortError') this.data = []
+        }
+    },
+    beforeUnmount() {
+        this.commitRequest?.abort()
     },
     methods: {
+        normalizeCommit(item) {
+            const [title, ...message] = item.commit.message.split('\n')
+            return {
+                ...item.commit.author,
+                title,
+                message: message.join('<br>'),
+                avatar: item.author?.avatar_url,
+                url: item.html_url,
+                date: item.commit.author.date.replace('T', ' ').replace('Z', ' '),
+            }
+        },
     }
 }
 </script>

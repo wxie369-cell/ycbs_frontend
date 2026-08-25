@@ -1,0 +1,99 @@
+:root {
+  /* Brand */
+  --ycbs-color-brand-950: #1d1028;
+  --ycbs-color-brand-900: #2b173a;
+  --ycbs-color-brand-800: #3d2052;
+  --ycbs-color-brand-700: #512b6c;
+  --ycbs-color-brand-600: #694087;
+  --ycbs-color-brand-100: #eee8f2;
+  --ycbs-color-accent-700: #0a6864;
+  --ycbs-color-accent-600: #0e7d77;
+  --ycbs-color-accent-500: #17928a;
+  --ycbs-color-accent-100: #dff1ef;
+
+  /* Neutral surfaces */
+  --ycbs-color-ink: #182026;
+  --ycbs-color-text: #303940;
+  --ycbs-color-muted: #667179;
+  --ycbs-color-border: #dfe3e4;
+  --ycbs-color-border-strong: #c9d0d2;
+  --ycbs-color-surface: #ffffff;
+  --ycbs-color-surface-alt: #f3f6f5;
+  --ycbs-color-canvas: #fafaf8;
+  --ycbs-color-focus: #0a6864;
+  --ycbs-color-on-dark: #ffffff;
+
+  /* Typography */
+  --ycbs-font-sans: "Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ycbs-font-display: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Inter", sans-serif;
+  --ycbs-text-xs: 0.75rem;
+  --ycbs-text-sm: 0.875rem;
+  --ycbs-text-base: 1rem;
+  --ycbs-text-md: 1.125rem;
+  --ycbs-text-lg: 1.375rem;
+  --ycbs-text-xl: clamp(1.75rem, 2.4vw, 2.25rem);
+  --ycbs-text-display: clamp(2.4rem, 4.6vw, 4.25rem);
+  --ycbs-leading-tight: 1.18;
+  --ycbs-leading-copy: 1.75;
+
+  /* Spacing */
+  --ycbs-space-1: 0.25rem;
+  --ycbs-space-2: 0.5rem;
+  --ycbs-space-3: 0.75rem;
+  --ycbs-space-4: 1rem;
+  --ycbs-space-5: 1.25rem;
+  --ycbs-space-6: 1.5rem;
+  --ycbs-space-8: 2rem;
+  --ycbs-space-10: 2.5rem;
+  --ycbs-space-12: 3rem;
+  --ycbs-space-16: 4rem;
+  --ycbs-space-20: 5rem;
+  --ycbs-space-24: 6rem;
+  --ycbs-space-28: 7rem;
+  --ycbs-space-32: 8rem;
+
+  /* Layout */
+  --ycbs-container-max: 1200px;
+  --ycbs-container-gutter: clamp(1.125rem, 4vw, 2rem);
+  --ycbs-section-space: clamp(4.25rem, 7.5vw, 6rem);
+  --ycbs-header-utility-height: 42px;
+  --ycbs-header-main-height: 80px;
+  --ycbs-header-mobile-height: 68px;
+
+  /* Shape and depth */
+  --ycbs-radius-xs: 2px;
+  --ycbs-radius-sm: 4px;
+  --ycbs-radius-md: 8px;
+  --ycbs-radius-lg: 12px;
+  --ycbs-shadow-sm: 0 2px 10px rgba(21, 30, 35, 0.07);
+  --ycbs-shadow-md: 0 12px 30px rgba(21, 30, 35, 0.11);
+  --ycbs-shadow-header: 0 1px 0 rgba(31, 40, 45, 0.12);
+
+  /* Motion */
+  --ycbs-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ycbs-duration-fast: 160ms;
+  --ycbs-duration-base: 240ms;
+  --ycbs-duration-slow: 360ms;
+
+  /* Breakpoint documentation (media queries still require literal values) */
+  --ycbs-breakpoint-sm: 600px;
+  --ycbs-breakpoint-md: 768px;
+  --ycbs-breakpoint-lg: 960px;
+  --ycbs-breakpoint-xl: 1280px;
+
+  /* Compatibility aliases used by existing pages. */
+  --color-bg: var(--ycbs-color-canvas);
+  --color-bg-2: var(--ycbs-color-surface-alt);
+  --color-surface: var(--ycbs-color-surface);
+  --color-primary: var(--ycbs-color-brand-700);
+  --color-primary-600: var(--ycbs-color-brand-600);
+  --color-secondary: var(--ycbs-color-accent-600);
+  --color-accent: var(--ycbs-color-accent-100);
+  --color-text: var(--ycbs-color-text);
+  --color-muted: var(--ycbs-color-muted);
+  --radius: var(--ycbs-radius-md);
+  --radius-sm: var(--ycbs-radius-sm);
+  --nav-blur: 12px;
+  --shadow-sm: var(--ycbs-shadow-sm);
+  --shadow-md: var(--ycbs-shadow-md);
+}
